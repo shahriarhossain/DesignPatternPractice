@@ -1,0 +1,12 @@
+*.suo
+*.user
+*.pdb
+
+.idea
+.vs
+
+bin/
+obj/
+
+/packages/
+!packages/repositories.config
