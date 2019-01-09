@@ -11,8 +11,8 @@ namespace DesignPatternPractice
     {
         static void Main(string[] args)
         {
-            AdapterPattern adapterExample = new AdapterPattern();
-
+            //AdapterPattern adapterExample = new AdapterPattern();
+            DecoratorPattern decoratorPattern = new DecoratorPattern();
             Console.ReadLine();
         }
     }
