@@ -10,7 +10,7 @@ namespace DesignPatternPractice.Structural_Patterns
             IBurger burger = new Burger();
             Console.WriteLine(burger.Display());
 
-            Cheese cheeseBurger = new Cheese(burger);
+            IBurger cheeseBurger = new Cheese(new Cheese(burger));
             Console.WriteLine(cheeseBurger.Display());
 
             Console.ReadLine();
@@ -20,40 +20,46 @@ namespace DesignPatternPractice.Structural_Patterns
     //Component
     public interface IBurger
     {
-        string Name { get; }
-        double Price { get; }
+        string GetName();
+        double GetPrice();
         string Display();
     }
 
     //Concrete Component
     public sealed class Burger : IBurger
     {
-        public string Name => "BBQ Chicken";
+        public string GetName() { return "BBQ Chicken"; }
 
-        public double Price => 180;
+        public double GetPrice() { return 180; }
 
         public string Display()
         {
-            return $"Name: {Name}, Price: {Price}";
+            return $"Name: {GetName()}, Price: {GetPrice()}";
         }
     }
 
     //Decorator
     public abstract class BurgerDecorator : IBurger
     {
-        private IBurger _burger; 
+        private IBurger _burger;
         public BurgerDecorator(IBurger burger)
         {
             _burger = burger;
         }
 
-        public string Name => _burger.Name;
-
-        public double Price => _burger.Price;
-
-        public virtual string Display()
+        public virtual string GetName()
         {
-            return $"Name: {Name}, Price: {Price}";
+            return _burger.GetName();
+        }
+
+        public virtual double GetPrice()
+        {
+            return _burger.GetPrice();
+        }
+
+        public string Display()
+        {
+            return $"Name: {GetName()}, Price: {GetPrice()}";
         }
     }
 
@@ -61,13 +67,14 @@ namespace DesignPatternPractice.Structural_Patterns
     public class Cheese : BurgerDecorator
     {
         public Cheese(IBurger burger) : base(burger) { }
-
-        public string Name =>  String.Concat("Cheese ", base.Name);
-        public double Price => base.Price + 30;
-
-        public string Display()
+        public override string GetName()
         {
-            return $"Name: {Name}, Price: {Price}";
+            return $" Cheese {base.GetName()}";
+        }
+
+        public override double GetPrice()
+        {
+            return base.GetPrice() + 30;
         }
     }
 }
